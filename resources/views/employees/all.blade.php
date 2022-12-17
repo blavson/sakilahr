@@ -17,12 +17,18 @@
                         <div class="col-sm-1">
                             <strong>{{ $employee->employee_id }}</strong>
                         </div>
-                        <div class="col-sm-11">
+                        <div class="col-sm-8">
                             <strong class="mb-1">{{$employee->last_name}}   {{ $employee->first_name }}</strong>
                             <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and
                                 date.
                             </div>
+                        </div>
+                        <div class="col-md-2">
+                            {{ $employee->dept_name }}
+                        </div>
 
+                        <div class="col-sm-1">
+                            {{$employee->birth_date}}
                         </div>
                     </div>
                 </a>
@@ -30,5 +36,4 @@
         </div>
     </div>
 
-    <div class="b-example-divider b-example-vr"></div>
 @endsection
