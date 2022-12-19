@@ -14,9 +14,10 @@ return new class extends Migration
     public function up()
     {
         Schema::create('employees', function (Blueprint $table) {
-            $table->unsignedInteger('employee_id')->primary();
+            $table->unsignedInteger('employee_id')->from(10000)->autoIncrement();
             $table->string('first_name');
             $table->string('last_name');
+            $table->string('gender', 1);
             $table->date('birth_date');
             $table->date('hire_date');
             $table->string('email')->unique();

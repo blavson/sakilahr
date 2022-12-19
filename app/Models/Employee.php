@@ -45,11 +45,15 @@ class Employee extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function departments(){
-        $this->hasMany(Vacation::class);
+    public function vacation(){
+       return $this->hasMany(Vacation::class);
     }
 
     public function salary() {
-        $this->hasOne(Salary::class);
+      return  $this->hasOne(Salary::class);
+    }
+
+    public function department() {
+        return $this->belongsToMany(Employee::class);
     }
 }

@@ -9,7 +9,8 @@ class Salary extends Model
 {
     use HasFactory;
 
+    public $guarded = ['employee_id'];
     public function employee() {
-        $this->belongsTo(Employee::class);
+        return $this->belongsTo(Employee::class);
     }
 }

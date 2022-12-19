@@ -10,6 +10,6 @@ class Vacation extends Model
     use HasFactory;
 
     public function employee() {
-        $this->belongsTo(Employee::class);
+        $this->belongsToMany(Employee::class);
     }
 }

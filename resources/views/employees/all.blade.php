@@ -21,7 +21,7 @@
                             </div>
                         </div>
                         <div class="col-md-2">
-                            {{ $employee->dept_name }}
+                            {{ $employee->department_name }}
                         </div>
 
                         <div class="col-sm-1">
