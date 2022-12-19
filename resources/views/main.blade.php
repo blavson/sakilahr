@@ -183,7 +183,7 @@
                         <svg class="bi pe-none me-2" width="16" height="16">
                             <use xlink:href="#speedometer2"/>
                         </svg>
-                        Dashboard
+                        Statistics
                     </a>
                 </li>
                 <li>
@@ -191,7 +191,7 @@
                         <svg class="bi pe-none me-2" width="16" height="16">
                             <use xlink:href="#table"/>
                         </svg>
-                        Orders
+                        Vacation Requests
                     </a>
                 </li>
                 <li>
