@@ -14,14 +14,14 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::middleware(['auth'])->group(function() {
-Route::get('/dashboard', [EmployeesController::class, 'all']);
-Route::get('/employees/{id}', [EmployeesController::class, 'show']);
-});
+//Route::middleware(['auth'])->group(function() {
+    Route::get('/dashboard', [EmployeesController::class, 'list'])->middleware(['auth']);
+//    Route::get('/employees/{id}', [EmployeesController::class, 'show']);
+//});
 
 Route::middleware(['guest'])->group(function() {
    Route::get('/login', [AuthController::class, 'login'] )->name('login');
-   Route::post('/login', [AuthController::class, 'store'] )->name('store');
+   Route::post('/login', [AuthController::class, 'authenticate'] )->name('authenticate');
 });
 
 

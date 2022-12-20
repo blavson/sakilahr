@@ -22,12 +22,19 @@
                     </form>
                 </li>
             </ul>
+            @guest()
                 <div class="nav-item">
                     <a class="nav-link" href="{{url('login')}}">Login</a>
                 </div>
-            <div class="mx-3 nav-item">
-                <a class="nav-link">Sign Up</a>
-            </div>
+                <div class="mx-3 nav-item">
+                    <a class="nav-link">Sign Up</a>
+                </div>
+            @endguest
+            @auth
+                <div class="nav-item">
+                    <a class="nav-link" href="{{url('logout')}}">Logout</a>
+                </div>
+            @endauth
         </div>
     </div>
 </nav>

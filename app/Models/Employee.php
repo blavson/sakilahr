@@ -17,12 +17,14 @@ class Employee extends Authenticatable
      *
      * @var array<int, string>
      */
+
+    protected $primaryKey = 'employee_id';
     protected $fillable = [
         'first_name',
         'last_name',
-        'hire_date',
         'birth_date',
         'email',
+        'gender',
         'password',
     ];
 
@@ -41,6 +43,16 @@ class Employee extends Authenticatable
      *
      * @var array<string, string>
      */
+
+    public function getAuthPassword()
+    {
+        return $this->password;
+    }
+
+    public function getAuthIdentifier() {
+        return $this->employee_id;
+    }
+
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
