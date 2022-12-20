@@ -25,7 +25,6 @@ class EmployeeFactory extends Factory
             'gender' => fake()->randomElement(['M', 'F']),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'birth_date' => fake()->dateTimeBetween('-50 years', '-19 years'),
-            'hire_date' => fake()->dateTimeBetween('-20 years', '-3 months'),
         ];
     }
 }

@@ -11,7 +11,6 @@
 </head>
 <body>
 <div class="container">
-    <x-navbar/>
     @if ($errors->any())
         <div class="alert alert-danger">
             <ul>
