@@ -15,11 +15,19 @@
                 <li class="nav-item">
                     <a class="nav-link disabled">Disabled</a>
                 </li>
+                <li>
+                    <form class="d-flex" role="search">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-primary" type="submit">Search</button>
+                    </form>
+                </li>
             </ul>
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-primary" type="submit">Search</button>
-            </form>
+                <div class="nav-item">
+                    <a class="nav-link" href="{{url('login')}}">Login</a>
+                </div>
+            <div class="mx-3 nav-item">
+                <a class="nav-link">Sign Up</a>
+            </div>
         </div>
     </div>
 </nav>
