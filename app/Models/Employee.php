@@ -65,7 +65,12 @@ class Employee extends Authenticatable
       return  $this->hasOne(Salary::class);
     }
 
-    public function department() {
-        return $this->belongsToMany(Employee::class);
+    public function deptemp() {
+        return $this->hasMany(DeptEmp::class, 'employee_id');
+    }
+
+    public function roles()
+    {
+        return $this->hasMany(Role::class);
     }
 }

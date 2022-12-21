@@ -23,7 +23,8 @@ Route::middleware(['auth'])->group(function() {
     });
 
     Route::get('/setdepartments', [\App\Http\Controllers\TestController::class, 'setDepartments']);
-    Route::get('/employees/{id}', [EmployeesController::class, 'show']);
+    Route::get('/employees/{employee}', [EmployeesController::class, 'show']);
+    Route::get('/employees/edit/{employee}', [EmployeesController::class, 'edit']);
 });
 
 Route::middleware(['guest'])->group(function() {

@@ -10,7 +10,7 @@ class Department extends Model
     use HasFactory;
 
     public function employee() {
-        return $this->belongsToMany(Employee::class);
+        return $this->belongTo(Employee::class);
     }
 
 }

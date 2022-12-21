@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Role extends Model
 {
     use HasFactory;
+
+    public function permissions()
+    {
+        return $this->hasMany(Permission::class);
+    }
+
+    public function employees()
+    {
+        return $this->belongsToMany(Employee::class);
+    }
 }
