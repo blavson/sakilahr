@@ -15,17 +15,18 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::middleware(['auth'])->group(function() {
-    Route::get('/dashboard', [EmployeesController::class, 'list']);
-    Route::get('/logout', function() {
-       Auth::logout();
-       return redirect('/');
+//Route::middleware(['auth'])->group(function() {
+    Route::get('/logout', function () {
+        Auth::logout();
+        return redirect('/');
     });
+//});
 
-    Route::get('/setdepartments', [\App\Http\Controllers\TestController::class, 'setDepartments']);
-    Route::get('/employees/{employee}', [EmployeesController::class, 'show']);
-    Route::get('/employees/edit/{employee}', [EmployeesController::class, 'edit']);
-});
+    Route::get('/dashboard', [EmployeesController::class, 'index']);
+    Route::resource('/employee', EmployeesController::class);
+//    Route::get('/setdepartments', [\App\Http\Controllers\TestController::class, 'setDepartments']);
+//    Route::get('/employees/{employee}', [EmployeesController::class, 'show']);
+//    Route::get('/employees/edit/{employee}', [EmployeesController::class, 'edit']);
 
 Route::middleware(['guest'])->group(function() {
    Route::get('/', [\App\Http\Controllers\WelcomeController::class, 'index']);

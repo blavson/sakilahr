@@ -23,6 +23,7 @@ class Employee extends Authenticatable
         'first_name',
         'last_name',
         'birth_date',
+        'role_id',
         'email',
         'gender',
         'password',
@@ -72,5 +73,23 @@ class Employee extends Authenticatable
     public function roles()
     {
         return $this->hasMany(Role::class);
+    }
+
+    public function manager() {
+        return $this->hasOne(Manager::class, 'employee_id');
+    }
+
+    public function createManager() {
+        if (!$this->manager) {
+            $this->manager()->create(['employee_id' => $this->employee_id, 'department_id' => 123]);
+        }
+    }
+    public function assignRole(Role $role) {
+        return $this->roles()->save($role);
+    }
+
+    public function actAs(string $rolestring) {
+        $role =  Role::where('name', $rolestring);
+
     }
 }
