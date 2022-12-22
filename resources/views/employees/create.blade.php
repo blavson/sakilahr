@@ -2,7 +2,7 @@
 
 
 @section('body')
-<form method='POST' action="{{ route('employee.create') }}">
+<form method='POST' action="{{ route('employee.store') }}">
     @csrf
     <div class='col-md-6 ml-4 mt-3 mx-10'>
         <div class="form-group mx-8 mb-4">
@@ -47,7 +47,7 @@
             </select>
         </div>
         <button type="submit" class="btn btn-lg btn-primary mt-2">Save</button>
-        <a href="{{ route ('employee.index') }}"><button  class="btn btn-lg btn-secondary mt-2">Cancel</button></a>
     </div>
 </form>
+        <a href="/"><button  class="btn btn-lg btn-secondary mt-2">Cancel</button></a>
 @endsection

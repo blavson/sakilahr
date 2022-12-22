@@ -17,7 +17,7 @@ class EmployeesController extends Controller
 
 //      dd(auth()->user());
         $employees = DB::SELECT('(SELECT employees.employee_id as eid, employees.first_name, employees.last_name, employees.gender, employees.birth_date, departments.department_name,
-                        employees.email , dept_manager.employee_id as manager_id, dept_manager.department_id , dept_emp.department_id as empdeptid
+                        employees.email , dept_manager.employee_id as manager_id, dept_manager.department_id
                          from employees
                           left outer join dept_manager on dept_manager.employee_id = employees.employee_id
                           left  join dept_emp on dept_emp.employee_id = employees.employee_id
@@ -25,14 +25,14 @@ class EmployeesController extends Controller
                           ORDER BY employees.employee_id)
                         union
                         (SELECT employees.employee_id as eid, employees.first_name, employees.last_name, employees.gender, employees.birth_date, departments.department_name ,
-                        employees.email , dept_manager.employee_id as manager_id, dept_manager.department_id ,  dept_emp.department_id as empdeptid
+                        employees.email , dept_manager.employee_id as manager_id, dept_manager.department_id
                          from employees
                            right outer join dept_manager on dept_manager.employee_id = employees.employee_id
                              join dept_emp on dept_emp.employee_id = employees.employee_id
                             join departments on departments.department_id = dept_emp.department_id
                            ORDER BY employees.employee_id
                         )
-                        ORDER BY eid');
+                        ORDER BY eid LIMIT 20');
         return view('employees.all', ['employees' => $employees]);
     }
 
