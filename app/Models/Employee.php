@@ -84,6 +84,7 @@ class Employee extends Authenticatable
             $this->manager()->create(['employee_id' => $this->employee_id, 'department_id' => 123]);
         }
     }
+
     public function assignRole(Role $role) {
         return $this->roles()->save($role);
     }

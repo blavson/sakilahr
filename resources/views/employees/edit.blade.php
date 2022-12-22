@@ -68,6 +68,7 @@
                 </select>
             </div>
             <button type="submit" class="btn btn-lg btn-primary mt-2">Save</button>
+            <a href="{{ route ('employee.index') }}"><button  class="btn btn-lg btn-secondary mt-2">Cancel</button></a>
         </div>
     </form>
 @endsection

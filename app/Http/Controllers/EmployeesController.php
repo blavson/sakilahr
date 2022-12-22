@@ -49,41 +49,54 @@ class EmployeesController extends Controller
         return view('employees.edit', ['employee' => $employee, 'departments' => $departments, 'roles' => $roles]);
     }
 
-//    public function store(Request $request) {
-//        $request->validate([
-//            'first_name' => ['max:255' , 'string'],
-//            'last_name' => ['max:255' , 'string'],
-//            'birth_date' => ['date'],
-//            'gender' => ['string', 'max:10'],
-//            'department_id' => ['integer'],
-//            'role_id' => ['integer']
-//        ]);
-//
-//        $emp = new Employee($request->only('first_name', 'last_name', 'birth_date', 'gender', 'department', 'role'));
-//        $emp->save();
-//        return redirect('dashboard', 201);
-//    }
+
+    public function create()
+    {
+        $departments = Department::all();
+        $roles = Role::all();
+        return view('employees.create', ['departments' => $departments, 'roles' => $roles]);
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate(['first_name' => ['max:255', 'string'],
+            'last_name' => ['max:255', 'string'],
+            'birth_date' => ['date'],
+            'gender' => ['string', 'max:10'],
+            'department' => ['integer'],
+            'role_id' => ['integer']]);
+
+        $employee = new Employee(['first_name' => $request->get('first_name'),
+            'last_name' => $request->get('last_name'),
+            'birth_date' => $request->get('birth_date'),
+            //  'deptemp->f'irst()->department_id = $request->get('department');
+            'gender' => $request->get('gender'),
+            'role_id' => $request->get('role_id')]);
+        $employee->deptemp()->create(['department_id' => $request->get('department')]);
+        $employee->save();
+
+    }
 
     public function update(Request $request, Employee $employee)
     {
         $request->validate([
-            'first_name' => ['max:255' , 'string'],
-            'last_name' => ['max:255' , 'string'],
+            'first_name' => ['max:255', 'string'],
+            'last_name' => ['max:255', 'string'],
             'birth_date' => ['date'],
             'gender' => ['string', 'max:2'],
             'role_id' => ['integer'],
-//            'department_id' => ['integer'],
+            'department' => ['integer'],
         ]);
-
         // Getting values from the blade template form
-        $employee->first_name =  $request->get('first_name');
-        $employee->last_name =  $request->get('last_name');
+        $employee->first_name = $request->get('first_name');
+        $employee->last_name = $request->get('last_name');
         $employee->birth_date = $request->get('birth_date');
-//        $deptID = $request->get('department_id');
+        $employee->deptemp->first()->department_id = $request->get('department');
         $employee->gender = $request->get('gender');
         $employee->role_id = $request->get('role_id');
-//        dd($employee);
-        $employee->save();
+//        dd($request->get('department'), $employee->deptemp);
+//        $employee->deptemp()->save();
+        $employee->push();
 
         return redirect('/dashboard')->with('success', 'Employee updated.');
     }
