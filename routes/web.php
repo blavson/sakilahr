@@ -23,7 +23,8 @@ use Illuminate\Support\Facades\Route;
 //});
 
     Route::get('/dashboard', [EmployeesController::class, 'index']);
-    Route::resource('/employee', EmployeesController::class);
+    Route::resource('/employees', EmployeesController::class);
+    Route::post('/employees/search', [EmployeesController::class, 'search'])->name('employees.search');
 //    Route::get('/setdepartments', [\App\Http\Controllers\TestController::class, 'setDepartments']);
 //    Route::get('/employees/{employee}', [EmployeesController::class, 'show']);
 //    Route::get('/employees/edit/{employee}', [EmployeesController::class, 'edit']);
