@@ -7,6 +7,7 @@ use App\Models\Employee;
 use App\Models\Manager;
 use App\Models\Role;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider
@@ -28,6 +29,7 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
+        Paginator::useBootstrapFive();
 
         Gate::define('view_employees',fn(Employee $employee)  => $employee->role_id > 1);
         Gate::define('edit_employees',fn(Employee $employee)  => $employee->role_id > 2);
