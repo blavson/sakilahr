@@ -186,6 +186,7 @@
                         Statistics
                     </a>
                 </li>
+                @can('accept_vacation_requests')
                 <li>
                     <a href="#" class="nav-link link-dark">
                         <svg class="bi pe-none me-2" width="16" height="16">
@@ -194,6 +195,7 @@
                         Vacation Requests
                     </a>
                 </li>
+                @endcan
                 <li>
                     <a href="#" class="nav-link link-dark">
                         <svg class="bi pe-none me-2" width="16" height="16">

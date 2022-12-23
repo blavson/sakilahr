@@ -5,6 +5,7 @@ namespace App\Providers;
 // use Illuminate\Support\Facades\Gate;
 use App\Models\Employee;
 use App\Models\Manager;
+use App\Models\Role;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -28,7 +29,9 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-//        dd ($this->);
+        Gate::define('view_employees',fn(Employee $employee)  => $employee->role_id > 1);
+        Gate::define('edit_employees',fn(Employee $employee)  => $employee->role_id > 2);
+        Gate::define('accept_vacation_requests', fn(Employee $employee) => $employee->role_id > 1);
 //        Gate::define('view-topic', function(Employee $employee) {
 //             $managers = Manager::where('employee_id', $employee->employee_id)->pluck('employee_id')->to_array();
 //             dd($managers);

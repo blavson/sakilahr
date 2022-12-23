@@ -44,6 +44,7 @@ class EmployeesController extends Controller
 
     public function edit(Employee $employee)
     {
+        $this->authorize('edit_employees');
         $departments = Department::all()->toArray();
         $roles = Role::all()->toArray();
         return view('employees.edit', ['employee' => $employee, 'departments' => $departments, 'roles' => $roles]);
@@ -52,6 +53,7 @@ class EmployeesController extends Controller
 
     public function create()
     {
+        $this->authorize('edit_employees');
         $departments = Department::all();
         $roles = Role::all();
         return view('employees.create', ['departments' => $departments, 'roles' => $roles]);
@@ -59,6 +61,7 @@ class EmployeesController extends Controller
 
     public function store(Request $request)
     {
+        $this->authorize('edit_employees');
         $request->validate(['first_name' => ['max:255', 'string'],
             'last_name' => ['max:255', 'string'],
             'birth_date' => ['date'],
@@ -79,6 +82,7 @@ class EmployeesController extends Controller
 
     public function update(Request $request, Employee $employee)
     {
+        $this->authorize('edit_employees', 'GTFO');
         $request->validate([
             'first_name' => ['max:255', 'string'],
             'last_name' => ['max:255', 'string'],
