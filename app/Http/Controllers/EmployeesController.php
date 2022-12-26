@@ -7,45 +7,74 @@ use App\Models\Employee;
 use App\Models\Manager;
 use App\Models\Role;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
+use Symfony\Component\Console\Input\Input;
 
 class EmployeesController extends Controller
 {
     public function index(Request $request)
     {
 
-        if (isset($request)) {
-            $searchString = $request->query('searchString');
-        }
-
-        $queryStringLeft  = '(SELECT employees.employee_id as eid, employees.first_name, employees.last_name, employees.gender, employees.birth_date, departments.department_name,
-                        employees.email , dept_manager.employee_id as manager_id, dept_manager.department_id
-                         from employees
-                          left outer join dept_manager on dept_manager.employee_id = employees.employee_id
-                          left  join dept_emp on dept_emp.employee_id = employees.employee_id
-                           join departments on departments.department_id = dept_emp.department_id ';
-
-        $queryStringRight = " (SELECT employees.employee_id as eid, employees.first_name, employees.last_name, employees.gender, employees.birth_date, departments.department_name ,
-                        employees.email , dept_manager.employee_id as manager_id, dept_manager.department_id
-                         from employees
-                           right outer join dept_manager on dept_manager.employee_id = employees.employee_id
-                             join dept_emp on dept_emp.employee_id = employees.employee_id
-                            join departments on departments.department_id = dept_emp.department_id";
-       if (!empty($searchString)) {
-           $queryStringLeft .= " WHERE employees.last_name like '%" . $searchString . "%' ";
-           $queryStringRight .= " WHERE employees.last_name like '%" . $searchString . "%' ";
-       }
-
-        $employees = DB::SELECT($queryStringLeft . " ORDER BY employees.employee_id ) " .
-                                        " union " .
-                                      $queryStringRight . " ORDER BY employees.employee_id ) " .
-                            " ORDER BY eid LIMIT 20");
+//        $queryStringLeft  = '(SELECT employees.employee_id as eid, employees.first_name, employees.last_name, employees.gender, employees.birth_date, departments.department_name,
+//                                   employees.email , dept_manager.employee_id as manager_id, dept_manager.department_id
+//                                 from employees
+//                                      left outer join dept_manager on dept_manager.employee_id = employees.employee_id
+//                                       left  join dept_emp on dept_emp.employee_id = employees.employee_id
+//                                       join departments on departments.department_id = dept_emp.department_id ';
+//
+//        $queryStringRight = " (SELECT employees.employee_id as eid, employees.first_name, employees.last_name, employees.gender, employees.birth_date, departments.department_name ,
+//                        employees.email , dept_manager.employee_id as manager_id, dept_manager.department_id
+//                         from employees
+//                           right outer join dept_manager on dept_manager.employee_id = employees.employee_id
+//                             join dept_emp on dept_emp.employee_id = employees.employee_id
+//                            join departments on departments.department_id = dept_emp.department_id";
 
 
-        return view('employees.all', ['employees' => $employees, 'searchString' => $searchString]);
+        $employeesLeft = \Illuminate\Support\Facades\DB::table('employees')->
+        select('employees.employee_id as eid', 'employees.first_name', 'employees.last_name', 'employees.gender', 'employees.birth_date', 'departments.department_name','employees.email' , 'dept_manager.employee_id as manager_id', 'dept_manager.department_id' ) ->
+        leftjoin('dept_manager', 'employees.employee_id', '=', 'dept_manager.employee_id')->
+        leftjoin('dept_emp', 'employees.employee_id', '=', 'dept_emp.employee_id')->
+        join('departments', 'departments.department_id', '=', 'dept_emp.department_id');
+
+        $employees = \Illuminate\Support\Facades\DB::table('employees')->
+        select('employees.employee_id as eid', 'employees.first_name', 'employees.last_name', 'employees.gender', 'employees.birth_date','departments.department_name','employees.email' , 'dept_manager.employee_id as manager_id', 'dept_manager.department_id' ) ->
+        rightJoin('dept_manager', 'employees.employee_id', '=', 'dept_manager.employee_id')->
+        rightJoin('dept_emp', 'employees.employee_id', '=', 'dept_emp.employee_id')->
+        join('departments', 'departments.department_id', '=', 'dept_emp.department_id')->union($employeesLeft)->paginate();
+
+//        dd($employees);
+//       if (!empty($searchString)) {
+//           $queryStringLeft .= " WHERE employees.last_name like '%" . $searchString . "%' ";
+//           $queryStringRight .= " WHERE employees.last_name like '%" . $searchString . "%' ";
+//       }
+//
+//        $employees = DB::SELECT($queryStringLeft . " ORDER BY employees.employee_id ) " .
+//                                        " union " .
+//                                      $queryStringRight . " ORDER BY employees.employee_id ) " .
+//                            " ORDER BY eid LIMIT 20");
+
+//        $employees = $this->arrayPaginator($employees, $request);
+//        $page =  $request->input('page', 1);
+////        dd($page, $request->url(), $request->query());
+//        $perPage = 20;
+//        $offset = ($page  -1 ) * $perPage;
+////        $employees = new  LengthAwarePaginator(array_slice($employees, $offset, $perPage, false), count($employees), $perPage, $page,
+////            ['path' => $request->url() , 'query' => $request->query()]);
+        $searchString = "";
+        return view('employees.all', ['employees' => $employees, 'searchString' => $searchString ]);
     }
 
+    public function arrayPaginator($array, $request):LengthAwarePaginator
+    {
+        $page =  $request->input('page', 1);
+//        dd($page, $request->url(), $request->query());
+        $perPage = 20;
+        $offset = ($page  -1 ) * $perPage;
+        return new LengthAwarePaginator(array_slice($array, $offset, $perPage, true), count($array), $perPage, $page,
+            ['path' => $request->url() , 'query' => $request->query()]);
+    }
     public function show(Employee $employee)
     {
         return view('employees.show', ['employee' => $employee]);

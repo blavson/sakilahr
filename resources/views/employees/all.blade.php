@@ -4,8 +4,6 @@
 @section('body')
     <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white" style="width: 100%;">
         <div class='row'>
-
-
             <nav>
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
                     <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home"
@@ -45,7 +43,6 @@
                             </a>
                         @endcan
                     </div>
-
 
                     <div class="list-group list-group-flush border-bottom scrollarea">
                         @foreach($employees as $employee)
@@ -93,8 +90,9 @@
                                 </div>
                     </div>
                 </div>
-
-
+                <div class="d-flex">
+                    {{ $employees->links() }}
+                </div>
             </div>
             @can('edit_employees')
             <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">

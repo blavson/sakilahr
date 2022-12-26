@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string('label')->nullable();
             $table->timestamps();
         });
-
         Schema::create('employees', function (Blueprint $table) {
             $table->unsignedInteger('employee_id')->from(10000)->autoIncrement();
             $table->string('first_name');
