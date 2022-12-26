@@ -33,16 +33,16 @@ class EmployeesController extends Controller
 
 
         $employeesLeft = \Illuminate\Support\Facades\DB::table('employees')->
-        select('employees.employee_id as eid', 'employees.first_name', 'employees.last_name', 'employees.gender', 'employees.birth_date', 'departments.department_name','employees.email' , 'dept_manager.employee_id as manager_id', 'dept_manager.department_id' ) ->
+        select('employees.employee_id as eid', 'employees.first_name', 'employees.last_name', 'employees.gender', 'employees.birth_date', 'departments.department_name','employees.email' , 'dept_manager.employee_id as manager_id', 'dept_emp.department_id' ) ->
         leftjoin('dept_manager', 'employees.employee_id', '=', 'dept_manager.employee_id')->
         leftjoin('dept_emp', 'employees.employee_id', '=', 'dept_emp.employee_id')->
-        join('departments', 'departments.department_id', '=', 'dept_emp.department_id');
+        leftjoin('departments', 'departments.department_id', '=', 'dept_emp.department_id');
 
         $employees = \Illuminate\Support\Facades\DB::table('employees')->
-        select('employees.employee_id as eid', 'employees.first_name', 'employees.last_name', 'employees.gender', 'employees.birth_date','departments.department_name','employees.email' , 'dept_manager.employee_id as manager_id', 'dept_manager.department_id' ) ->
-        rightJoin('dept_manager', 'employees.employee_id', '=', 'dept_manager.employee_id')->
+        select('employees.employee_id as eid', 'employees.first_name', 'employees.last_name', 'employees.gender', 'employees.birth_date','departments.department_name','employees.email' , 'dept_manager.employee_id as manager_id', 'dept_emp.department_id' ) ->
+        leftJoin('dept_manager', 'employees.employee_id', '=', 'dept_manager.employee_id')->
         rightJoin('dept_emp', 'employees.employee_id', '=', 'dept_emp.employee_id')->
-        join('departments', 'departments.department_id', '=', 'dept_emp.department_id')->union($employeesLeft)->paginate();
+        leftjoin('departments', 'departments.department_id', '=', 'dept_emp.department_id')->union($employeesLeft)->orderBy('eid')->paginate(20);
 
 //        dd($employees);
 //       if (!empty($searchString)) {

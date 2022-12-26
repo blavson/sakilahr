@@ -13,7 +13,7 @@
                     <a class="nav-link" href="#">Link</a>
                 </li>
                 <li>
-                    <form class="d-flex" role="search" method='POST' action="{{ route('employees.search') }}">
+                    <form class="d-flex" role="search" method='get' action="{{ route('employees.search') }}">
                         @csrf
                         <input class="form-control me-2" type="search"  name="searchString"  value="{{ old('searchString') }}" aria-label="Search">
                         <button class="btn btn-outline-primary" type="submit">Search</button>
